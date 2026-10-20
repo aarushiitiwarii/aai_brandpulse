@@ -1,0 +1,12 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# SQLite temp files (the .db files themselves are committed as a ready-to-use snapshot)
+*.db-wal
+*.db-shm
+*.db-journal
+
+# Personal secrets (e.g. GROQ_API_KEY) go in .env.local, which is never committed
+.env.local

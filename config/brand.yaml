@@ -1,0 +1,119 @@
+# Brand monitoring configuration.
+# `brands` keys must match the `airline` column of the Twitter US Airline dataset.
+our_brand: United
+
+brands:
+  United:
+    handle: "@united"
+    aliases: ["united airlines", "unitedairlines", "@united"]
+    products: ["MileagePlus", "Economy Plus", "United Club", "United app", "Polaris"]
+    executives: ["Jeff Smisek"]          # CEO in Feb 2015
+  American:
+    handle: "@AmericanAir"
+    aliases: ["american airlines", "@americanair"]
+    products: ["AAdvantage", "Admirals Club"]
+    executives: ["Doug Parker"]
+  Delta:
+    handle: "@Delta"
+    aliases: ["delta airlines", "@delta"]
+    products: ["SkyMiles", "Sky Club"]
+    executives: ["Richard Anderson"]
+  Southwest:
+    handle: "@SouthwestAir"
+    aliases: ["southwest airlines", "@southwestair"]
+    products: ["Rapid Rewards", "EarlyBird"]
+    executives: ["Gary Kelly"]
+  US Airways:
+    now_flies_as: American              # merged into American Airlines; brand retired Oct 2015
+    display_now: "now American Airlines"
+    handle: "@USAirways"
+    aliases: ["us airways", "@usairways"]
+    products: ["Dividend Miles"]
+    executives: ["Doug Parker"]
+  Virgin America:
+    now_flies_as: Alaska                # acquired by Alaska Airlines; brand retired 2018
+    display_now: "now Alaska Airlines"
+    handle: "@VirginAmerica"
+    aliases: ["virgin america", "@virginamerica"]
+    products: ["Elevate"]
+    executives: ["David Cush"]
+
+# Airlines flying today, used by Live mode. Replay brands map onto these via `now_flies_as`
+# (default: same name). Alaska exists only here; it is Virgin America's successor.
+live_identities:
+  United:
+    handle: "@united"
+    aliases: ["united airlines", "@united"]
+    products: ["MileagePlus", "United Club", "Polaris", "United app"]
+    executives: ["Scott Kirby"]
+    bluesky_queries: ["\"united airlines\""]
+    subreddits: ["unitedairlines"]
+    mastodon_tags: ["unitedairlines"]
+    news_query: "\"United Airlines\""
+  Delta:
+    handle: "@Delta"
+    aliases: ["delta air lines", "delta airlines", "@delta"]
+    products: ["SkyMiles", "Sky Club", "Delta One", "Fly Delta app"]
+    executives: ["Ed Bastian"]
+    bluesky_queries: ["\"delta airlines\"", "\"delta air lines\""]
+    subreddits: ["delta"]
+    mastodon_tags: ["deltaairlines"]
+    news_query: "\"Delta Air Lines\""
+  American:
+    handle: "@AmericanAir"
+    aliases: ["american airlines", "@americanair"]
+    products: ["AAdvantage", "Admirals Club", "Flagship"]
+    executives: ["Robert Isom"]
+    bluesky_queries: ["\"american airlines\""]
+    subreddits: ["americanairlines"]
+    mastodon_tags: ["americanairlines"]
+    news_query: "\"American Airlines\""
+  Southwest:
+    handle: "@SouthwestAir"
+    aliases: ["southwest airlines", "@southwestair"]
+    products: ["Rapid Rewards", "EarlyBird", "Companion Pass"]
+    executives: ["Bob Jordan"]
+    bluesky_queries: ["\"southwest airlines\""]
+    subreddits: ["SouthwestAirlines"]
+    mastodon_tags: ["southwestairlines"]
+    news_query: "\"Southwest Airlines\""
+  Alaska:
+    handle: "@AlaskaAir"
+    aliases: ["alaska airlines", "@alaskaair"]
+    products: ["Atmos Rewards", "Mileage Plan", "Alaska Lounge"]
+    executives: ["Ben Minicucci"]
+    bluesky_queries: ["\"alaska airlines\""]
+    subreddits: ["AlaskaAirlines"]
+    mastodon_tags: ["alaskaairlines"]
+    news_query: "\"Alaska Airlines\""
+
+live:
+  poll_seconds: 90            # how often each source is polled
+  stride_minutes: 10          # agents run every N minutes ...
+  window_minutes: 60          # ... over the trailing N minutes of posts
+  baseline_windows: 144       # risk baseline = previous 24h of 10-minute strides
+  backfill_hours: 24          # history fetched the first time a live workspace starts
+
+# Campaign hashtags to track. Real hashtags are also auto-discovered from the data.
+# #FlyUnited2015 is a SYNTHETIC campaign injected by sources/enrich.py for the demo.
+campaigns:
+  - hashtag: "#FlyUnited2015"
+    start: "2015-02-18 08:00:00"
+    end: "2015-02-22 20:00:00"
+    synthetic: true
+
+# Response tone: friendly | professional | luxury | startup
+tone: professional
+
+replay:
+  window_minutes: 60          # one graph run = one hour of real tweets
+  trend_lookback_hours: 12    # clustering looks at this much history
+  growth_compare_hours: 2     # growth = last N hours vs the N hours before
+  baseline_windows: 24        # risk baseline = previous N windows
+
+responses:
+  drafts_per_window: 1        # keeps the approval queue and Groq token use manageable
+  min_impact: 45
+
+llm:
+  batch_size: 20              # posts per classification call
