@@ -1,5 +1,7 @@
 # PS-06: Social Media Sentiment & Response Agent
 
+**Live demo:** https://brandpulse-aai.streamlit.app/ (hosted free on Streamlit Community Cloud; if it is asleep, click "Yes, get this app back up" and wait about a minute)
+
 A multi-agent brand intelligence system. It monitors mentions, classifies them, reads sentiment and emotion, scores influence, discovers trending topics, detects PR crises early, drafts replies for **human approval**, and reports everything on an executive dashboard.
 
 The system runs on **real tweets** (Twitter US Airline Sentiment, ~14.6k tweets, 16–24 Feb 2015) replayed hour by hour. On launch you **choose a workspace**, one of the 6 airlines. That airline becomes "our brand" and the other 5 become its competitors. Each workspace keeps its own replay clock, alerts, topics, reply queue and crisis scenario. The URL `?brand=Delta` keeps you in a workspace across refreshes.
