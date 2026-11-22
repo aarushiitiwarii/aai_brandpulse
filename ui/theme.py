@@ -53,7 +53,11 @@ CSS = """
 .stApp h1, .stApp h2, .stApp h3, .stApp h4, .bp-display { font-family: 'Poppins', 'Inter', sans-serif !important;
   color: var(--bp-text); letter-spacing: -0.015em; }
 [data-testid="stHeader"] { background: transparent; }
-[data-testid="stToolbar"], [data-testid="stDecoration"], footer, #MainMenu { display: none !important; }
+/* Hide Streamlit's toolbar actions (deploy, menu) but keep the toolbar itself:
+   it holds the button that reopens a collapsed sidebar. */
+[data-testid="stToolbarActions"], [data-testid="stMainMenu"], [data-testid="stAppDeployButton"],
+[data-testid="stDecoration"], footer, #MainMenu { display: none !important; }
+[data-testid="stExpandSidebarButton"] { color: var(--bp-text) !important; }
 .block-container { padding-top: 2rem; padding-bottom: 3rem; max-width: 1320px; }
 
 /* Sidebar: dark glass rail */
